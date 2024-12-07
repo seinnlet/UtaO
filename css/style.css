@@ -106,6 +106,12 @@ main .notes .note div {
 	border-radius: 10px;
 	background-color: #FFFF80;
 }
+main .notes .note.matched div {
+	background-color: #4CAF50;
+}
+main .notes .note.unmatched div {
+	background-color: #FFFF80;
+}
 
 /* ----- frequency ----- */
 main .output-control {
