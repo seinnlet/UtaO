@@ -23,6 +23,30 @@ body {
 	width: min(1000px, 100%);
 }
 
+.btn {
+	outline: none;
+	border: none;
+	padding: 20px 50px;
+	font-weight: 900;
+	font-size: 1.5rem;
+	border-radius: 10px;
+	cursor: pointer;
+	color: #fcfcfc;
+	background-color: #2196f3;
+  background-position: center;
+  transition: background 0.5s;
+}
+
+.btn:hover {
+  background: #47a7f5 radial-gradient(circle, transparent 1%, #47a7f5 1%) center/15000%;
+}
+
+.btn:active {
+  background-color: #6eb9f7;
+  background-size: 100%;
+  transition: background 0s;
+}
+
 /* ===== header ===== */
 header {
 	position: fixed;
@@ -80,7 +104,7 @@ main .notes .note div {
 	margin-top: 30px;
 	height: 100px;
 	border-radius: 10px;
-	background-color: #FCFDAF;
+	background-color: #FFFF80;
 }
 
 /* ----- frequency ----- */
@@ -89,14 +113,15 @@ main .output-control {
 	display: flex;
 	justify-content: center;
 	text-align: center;
+	column-gap: 20px;
 	flex-wrap: wrap;
 }
 
 main .output-control .output {
-	width: 60%;
+	width: min(60%, 400px);
 	padding: 25px 0;
 	border-radius: 20px;
-	box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.07);
+	box-shadow: 0 0 10px rgba(149, 157, 165, 0.2);
 }
 
 main .output-control .output #frequency {
@@ -109,5 +134,6 @@ main .output-control .output #pitch {
 }
 
 main .output-control .control {
-	width: 40%;
+	display: flex;
+	align-items: center;
 }
