@@ -82,9 +82,7 @@ function updateNotes(pitch) {
 		const noteElement = noteElements[index];
 		if (Math.abs(pitch - freq) < 5) {
 			noteElement.classList.add('matched');
-			noteElement.classList.remove('unmatched');
 		} else {
-			noteElement.classList.add('unmatched');
 			noteElement.classList.remove('matched');
 		}
 	});
@@ -142,4 +140,61 @@ function autoCorrelate(buffer, sampleRate) {
 
 	const T0 = maxpos;
 	return sampleRate / T0;
+}
+
+/**
+ * キーボート
+ */
+const noteMap = {
+	"C4": 261.63,
+	"C#4": 277.18,
+	"D4": 293.66,
+	"D#4": 311.13,
+	"E4": 329.63,
+	"F4": 349.23,
+	"F#4": 369.99,
+	"G4": 392.00,
+	"G#4": 415.30,
+	"A4": 440.00,
+	"A#4": 466.16,
+	"B4": 493.88,
+	"C5": 523.25
+};
+
+const keys = document.querySelectorAll('.key');
+
+keys.forEach(key => {
+	key.addEventListener('click', () => {
+		const note = key.getAttribute('data-note');
+
+		const pitchNote = document.getElementById('note-' + note);
+		pitchNote.classList.add('matched');
+		setTimeout(() => {
+			pitchNote.classList.remove('matched');
+		}, 700);
+		
+		if (audioContext) {
+			playNote(noteMap[note]);
+		}
+	});
+});
+
+function playNote(frequency) {
+	const oscillator = audioContext.createOscillator();
+	const gainNode = audioContext.createGain();
+
+	oscillator.type = 'triangle';
+	oscillator.frequency.setValueAtTime(frequency, audioContext.currentTime);
+
+	gainNode.gain.setValueAtTime(0, audioContext.currentTime);
+	gainNode.gain.linearRampToValueAtTime(0.8, audioContext.currentTime + 0.02);
+	gainNode.gain.linearRampToValueAtTime(0.6, audioContext.currentTime + 0.2);
+	gainNode.gain.setValueAtTime(0.6, audioContext.currentTime + 0.2);
+	gainNode.gain.linearRampToValueAtTime(0, audioContext.currentTime + 0.7);
+
+	oscillator.connect(gainNode);
+	gainNode.connect(audioContext.destination);
+
+	oscillator.start();
+	oscillator.stop(audioContext.currentTime + 0.7);
 }
