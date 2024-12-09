@@ -173,6 +173,7 @@ main .output-control .control {
 	padding: 0;
 	width: 30%;
 	height: 60%;
+	box-sizing: border-box;
 }
 
 .black-note:active {
@@ -190,6 +191,7 @@ main .output-control .control {
 	box-sizing: content-box;
 	padding: 0;
 	height: 100%;
+	box-sizing: border-box;
 }
 
 .white-note:last-of-type {
