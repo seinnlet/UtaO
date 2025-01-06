@@ -240,19 +240,6 @@ main .output-control .control {
 	border-right: 1px solid var(--primary-dark);
 }
 
-#cursor {
-  cursor: none;
-  pointer-events: none;
-  position: fixed;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  background-color: transparent;
-  transition-duration: .1s;
-  transform: translate(-50%, -50%);
-  mix-blend-mode: multiply;
-}
-
 #main-menu main a:first-of-type .title span {
 	background-position: top left;
   background-repeat: no-repeat;
@@ -273,14 +260,6 @@ main .output-control .control {
 
 #main-menu main a:hover .icon {
 	transform: scale(1.25);
-}
-
-#main-menu main a:first-of-type:hover ~ #cursor {
-  background-color: var(--primary-yellow);
-}
-
-#main-menu main a:last-of-type:hover ~ #cursor {
-  background-color: var(--primary-blue);
 }
 
 #main-menu main a::after {
