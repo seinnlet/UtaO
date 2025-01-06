@@ -1,0 +1,61 @@
+/* ===== responsive ===== */
+@media screen and (max-width: 1024px) {
+	#main-menu main a .title {
+		font-size: clamp(1.4rem, 0.5509rem + 2.2642vw, 2rem);
+	}
+
+	.inner-container {
+		padding: 0 20px;
+	}
+}
+
+@media screen and (max-width: 768px) {
+	.container {
+		padding: 0 20px;
+	}
+
+	.hide-on-mobile {
+		display: none;
+	}
+
+	header .song-info {
+		font-size: 0.85rem;
+	}
+
+	.btn, 
+	#frequency,
+	main .notes .note span {
+		font-size: 1rem;
+	}
+
+	main .inner-container {
+		row-gap: 30px;
+	}
+
+	main .output-control .output {
+		padding: 10px 0;
+	}
+
+	#main-menu main a {
+		width: 100%;
+		flex: none;
+		height: calc(100% / 3);
+	}
+	
+	#main-menu main a:first-of-type, #main-menu main a:nth-of-type(2) {
+    border-bottom: 1px solid var(--primary-dark);
+    border-right: none;
+	}
+
+	#main-menu main a .icon svg {
+		width: 60px;
+		height: 60px;
+	}
+}
+
+/* ----- small screen ----- */
+@media screen and (max-width: 300px) {
+	body {
+		min-width: 300px;
+	}
+}

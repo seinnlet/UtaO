@@ -5,7 +5,9 @@
 	--primary-yellow: #F9F07A;
 	--light-yellow: #FFFECB;
 	--primary-blue: #2196f3;
-	--light-blue: #B7E0FF;
+	--light-blue: #E3F6FF;
+	--primary-green: #4CAF50;
+	--light-green: #E7FBE6;
 }
 
 html {
@@ -19,12 +21,13 @@ body {
 }
 
 .container {
-	max-width: 1400px;
+	max-width: 2000px;
+	padding: 0 50px;
 	margin: auto;
 }
 
 .inner-container {
-	width: min(1000px, 100%);
+	max-width: 1000px;
 	margin: auto;
 }
 
@@ -64,7 +67,9 @@ header {
 
 header .container, footer .container {
 	display: flex;
+	flex-wrap: wrap;
 	align-items: center;
+	justify-content: space-between;
 	height: 100%;
 }
 
@@ -73,13 +78,16 @@ header .site-logo {
 	text-decoration: none;
 	font-weight: 900;
 	font-size: 1.6rem;
-	width: 300px;
 }
 
 header .song-info {
 	font-size: 1.125rem;
 	line-height: 1.5;
 	font-weight: 500;
+	display: flex;
+	align-items: flex-end;
+	justify-content: center;
+	flex-flow: column wrap;
 }
 
 /* ===== main ===== */
@@ -219,11 +227,11 @@ main .output-control .control {
 }
 
 #main-menu main a {
+	flex: 1;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	height: 100%;
-	width: 50%;
 	flex-flow: column wrap;
 	box-sizing: border-box;
 	color: var(--primary-dark);
@@ -236,21 +244,41 @@ main .output-control .control {
 	position: relative;
 }
 
-#main-menu main a:first-of-type {
+#main-menu main a:first-of-type,
+#main-menu main a:nth-of-type(2) {
 	border-right: 1px solid var(--primary-dark);
 }
 
-#main-menu main a:first-of-type .title span {
+#main-menu main a:first-of-type:hover {
+	background-color: var(--light-yellow);
+	box-shadow: inset 20px 0 0 var(--primary-yellow);
+}
+
+#main-menu main a:nth-of-type(2):hover {
+	background-color: var(--light-green);
+	box-shadow: inset 20px 0 0 var(--primary-green);
+}
+
+#main-menu main a:last-of-type:hover {
+	background-color: var(--light-blue);
+	box-shadow: inset 20px 0 0 var(--primary-blue);
+}
+
+#main-menu main a .title span {
 	background-position: top left;
-  background-repeat: no-repeat;
+	background-repeat: no-repeat;
 	background-size: 100%;
+}
+
+#main-menu main a:first-of-type .title span {
 	background-image: linear-gradient(to top, var(--light-yellow) 40%, transparent 0);
 }
 
+#main-menu main a:nth-of-type(2) .title span {
+	background-image: linear-gradient(to top, var(--light-green) 40%, transparent 0);
+}
+
 #main-menu main a:last-of-type .title span {
-	background-position: top left;
-  background-repeat: no-repeat;
-	background-size: 100%;
 	background-image: linear-gradient(to top, var(--light-blue) 40%, transparent 0);
 }
 
@@ -260,6 +288,11 @@ main .output-control .control {
 
 #main-menu main a:hover .icon {
 	transform: scale(1.25);
+}
+
+#main-menu main a .icon svg {
+	width: 100px;
+	height: 100px;
 }
 
 #main-menu main a::after {
