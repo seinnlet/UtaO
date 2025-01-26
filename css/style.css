@@ -48,20 +48,46 @@ body {
 	font-size: 1.5rem;
 }
 
-.btn.btn-song-start {
+.btn.btn-song-start,
+.btn-reset {
 	padding: 10px 30px;
 	font-weight: 700;
 	font-size: 1.2rem;
 }
 
-.btn:hover {
+.btn:hover,
+#btn-low-key:hover,
+#btn-high-key:hover {
 	background: #47a7f5 radial-gradient(circle, transparent 1%, #47a7f5 1%) center/15000%;
 }
 
-.btn:active {
+.btn:active,
+#btn-low-key:active,
+#btn-high-key:active {
 	background-color: #6eb9f7;
 	background-size: 100%;
 	transition: background 0s;
+}
+
+.btn-reset {
+	outline: none;
+	border: 1px solid var(--primary-blue);
+	border-radius: 10px;
+	cursor: pointer;
+	color: var(--primary-blue);
+	background-color: #fff;
+	transition-duration: .2s;
+	display: none;
+}
+
+.btn-reset:hover {
+	color: #fff;
+	background-color: var(--primary-blue);
+}
+
+.btn-reset:focus {
+	color: #fff;
+	background-color: #47a7f5;
 }
 
 /* ===== header ===== */
@@ -72,9 +98,12 @@ header {
 	height: 70px;
 	border-bottom: 1px solid var(--primary-dark);
 	box-sizing: border-box;
+	background-color: #fff;
+	z-index: 100;
 }
 
-header .container, footer .container {
+header .container,
+footer .container {
 	display: flex;
 	flex-wrap: wrap;
 	align-items: center;
@@ -132,6 +161,11 @@ main .notes .note div {
 	margin-top: 30px;
 	height: 100px;
 	border-radius: 10px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 1.125rem;
+	font-weight: 500;
 	background-color: var(--primary-yellow);
 }
 
@@ -159,7 +193,9 @@ main .output-control .output {
 	box-shadow: 0 0 15px rgba(149, 157, 165, 0.2);
 }
 
-main .output-control .output #frequency {
+main .output-control .output #frequency,
+main .output-control .key-change #current-key,
+#range-detected {
 	font-weight: 500;
 	font-size: 1.5rem;
 }
@@ -172,6 +208,31 @@ main .output-control .output #pitch {
 main .output-control .control {
 	display: flex;
 	align-items: center;
+}
+
+main .output-control .key-change {
+	display: flex;
+	align-items: center;
+}
+
+main .output-control .key-change #current-key {
+	padding: 0 10px;
+}
+
+#btn-low-key,
+#btn-high-key {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	outline: none;
+	border: none;
+	background-color: var(--primary-blue);
+	border-radius: 10px;
+	width: 40px;
+	height: 40px;
+	cursor: pointer;
+	background-position: center;
+	transition: background 0.7s;
 }
 
 /* ----- keyboard ----- */
@@ -199,7 +260,7 @@ main .output-control .control {
 }
 
 .black-note:active {
-  background-color: #3c3c3c;
+	background-color: #3c3c3c;
 }
 
 .white-note {
@@ -232,6 +293,7 @@ footer {
 	height: 70px;
 	border-top: 1px solid var(--primary-dark);
 	box-sizing: border-box;
+	background-color: #fff;
 }
 
 
@@ -346,12 +408,111 @@ footer {
 	justify-content: center;
 }
 
+#btn-play {
+	display: none;
+}
+
 #pitch-canvas {
-	width: calc(100vh - 240px);
-	height: calc(100vw - 100px);
+	width: calc(100vh - 140px);
+	height: 100vw;
 	transform: rotate(-90deg);
+	display: none;
+}
+
+#start-line {
+	position: absolute;
+	width: 5px;
+	height: 100%;
+	top: 0;
+	background-color: #E8423B;
+	opacity: 0;
+	transition-duration: 0.4s;
+}
+
+#lyrics {
+	position: absolute;
+	top: 100px;
+	left: 50%;
+	width: 50%;
+	font-size: 2rem;
+	font-weight: 600;
+	font-style: italic;
 }
 
 #song-v footer .container {
 	justify-content: center;
+}
+
+#find-pitch {
+	display: flex;
+	justify-content: center;
+	text-align: center;
+	flex-flow: column wrap;
+	gap: 20px;
+}
+
+#range-detected {
+	margin: 0.67em 0;
+	padding: 25px 0;
+	border-radius: 20px;
+	box-shadow: 0 0 15px rgba(149, 157, 165, 0.2);
+}
+
+.wave-wrapper {
+	height: 40px;
+	width: 50px;
+	display: block;
+	margin: auto;
+	position: relative;
+}
+
+.wave-line {
+	display: block;
+	bottom: 0px;
+	width: 6px;
+	height: 20px;
+	position: absolute;
+	-webkit-animation: wave 1.2s infinite ease paused;
+	animation: wave 1.2s infinite ease paused;
+	background: var(--primary-yellow);
+	border-radius: 4px;
+}
+
+.wave-line:nth-child(2) {
+	left: 10px;
+	-webkit-animation-delay: 0.2s;
+	animation-delay: 0.2s;
+}
+
+.wave-line:nth-child(3) {
+	left: 20px;
+	-webkit-animation-delay: 0.4s;
+	animation-delay: 0.4s;
+}
+
+.wave-line:nth-child(4) {
+	left: 30px;
+	-webkit-animation-delay: 0.6s;
+	animation-delay: 0.6s;
+}
+
+.wave-line:nth-child(5) {
+	left: 40px;
+	-webkit-animation-delay: 0.8s;
+	animation-delay: 0.8s;
+}
+
+@keyframes wave {
+	0% {
+		height: 20px;
+	}
+
+	50% {
+		height: 40px;
+		transform: translateY(10px);
+	}
+
+	100% {
+		height: 20px;
+	}
 }

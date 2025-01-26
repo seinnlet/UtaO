@@ -29,20 +29,25 @@
 	<main>
 		<div class="inner-container">
 			 <div class="notes">
-				<div class="note" id="note-C4"><span>ド</span><div></div></div>
-				<div class="note" id="note-D4"><span>レ</span><div></div></div>
-				<div class="note" id="note-E4"><span>ミ</span><div></div></div>
-				<div class="note" id="note-F4"><span>ファ</span><div></div></div>
-				<div class="note" id="note-G4"><span>ソ</span><div></div></div>
-				<div class="note" id="note-A4"><span>ラ</span><div></div></div>
-				<div class="note" id="note-B4"><span>シ</span><div></div></div>
-				<div class="note" id="note-C5"><span>ド</span><div></div></div>
+				<div class="note" id="note-C"><span>ド</span><div>C</div></div>
+				<div class="note" id="note-D"><span>レ</span><div>D</div></div>
+				<div class="note" id="note-E"><span>ミ</span><div>E</div></div>
+				<div class="note" id="note-F"><span>ファ</span><div>F</div></div>
+				<div class="note" id="note-G"><span>ソ</span><div>G</div></div>
+				<div class="note" id="note-A"><span>ラ</span><div>A</div></div>
+				<div class="note" id="note-B"><span>シ</span><div>B</div></div>
+				<div class="note" id="note-C"><span>ド</span><div>C</div></div>
 			 </div>
 
 			 <div class="output-control">
 				<div class="output">
 					<div><span id="frequency">---- Hz</span></div>
 					<div><span id="pitch">--</span></div>
+				</div>
+				<div class="key-change">
+					<button type="button" id="btn-low-key"><svg xmlns="http://www.w3.org/2000/svg" width="18" viewBox="0 0 320 512"><path fill="#fcfcfc" d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></button>
+					<span id="current-key">C4 ~ C5</span>
+					<button type="button" id="btn-high-key"><svg xmlns="http://www.w3.org/2000/svg" width="18" viewBox="0 0 320 512"><path fill="#fcfcfc" d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></button>
 				</div>
 				<div class="control">
 					<button class="btn btn-doremi-start" id="btn-doremi-start">スタート</button>

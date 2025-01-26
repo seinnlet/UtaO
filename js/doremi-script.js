@@ -1,7 +1,10 @@
 const noteElements = document.querySelectorAll('.note');
 const frequencyDisplay = document.getElementById('frequency');
 const pitchDisplay = document.getElementById('pitch');
+const keyDisplay = document.getElementById('current-key');
 const startButton = document.getElementById('btn-doremi-start');
+const lowKeyButton = document.getElementById('btn-low-key');
+const highKeyButton = document.getElementById('btn-high-key');
 
 const pitches = [
 	'C0', 'C#0', 'D0', 'D#0', 'E0', 'F0', 'F#0', 'G0', 'G#0', 'A0', 'A#0', 'B0',  // 0
@@ -15,11 +18,10 @@ const pitches = [
 	'C8', 'C#8', 'D8', 'D#8', 'E8', 'F8', 'F#8', 'G8', 'G#8', 'A8', 'A#8', 'B8',  // 8
 ];
 
-console.log(pitches.length)
-
-const frequencies = [261.63, 293.66, 329.63, 349.23, 392.00, 440.00, 493.88, 523.25];
+let frequencies = [261.63, 293.66, 329.63, 349.23, 392.00, 440.00, 493.88, 523.25];
 
 let audioContext, analyser, sourceNode, rafId;
+let currentKey = 4, minKey = 2, maxKey = 4;
 
 /**
  * スタートタンをクリックする
@@ -144,39 +146,19 @@ function autoCorrelate(buffer, sampleRate) {
 	return sampleRate / T0;
 }
 
-/**
- * キーボート
- */
-const noteMap = {
-	"C4": 261.63,
-	"C#4": 277.18,
-	"D4": 293.66,
-	"D#4": 311.13,
-	"E4": 329.63,
-	"F4": 349.23,
-	"F#4": 369.99,
-	"G4": 392.00,
-	"G#4": 415.30,
-	"A4": 440.00,
-	"A#4": 466.16,
-	"B4": 493.88,
-	"C5": 523.25
-};
+const whiteKeys = document.querySelectorAll('.white-note');
 
-const keys = document.querySelectorAll('.key');
-
-keys.forEach(key => {
+whiteKeys.forEach((key, index) => {
 	key.addEventListener('click', () => {
-		const note = key.getAttribute('data-note');
+		console.log(index)
 
-		const pitchNote = document.getElementById('note-' + note);
-		pitchNote.classList.add('matched');
+		noteElements[index].classList.add('matched');
 		setTimeout(() => {
-			pitchNote.classList.remove('matched');
+				noteElements[index].classList.remove('matched'); 
 		}, 700);
 		
 		if (audioContext) {
-			playNote(noteMap[note]);
+			playNote(frequencies[index]);
 		}
 	});
 });
@@ -199,4 +181,40 @@ function playNote(frequency) {
 
 	oscillator.start();
 	oscillator.stop(audioContext.currentTime + 0.7);
+}
+
+/**
+ * キーを変える
+ */
+lowKeyButton.addEventListener('click', function() {
+	if (currentKey > minKey) {
+		currentKey-=1;
+		setFrequencies(currentKey);
+	}
+});
+
+highKeyButton.addEventListener('click', function() {
+	if (currentKey < maxKey) {
+		currentKey+=1;
+		setFrequencies(currentKey);
+	}
+});
+
+function setFrequencies(key) {
+	keyDisplay.textContent = `C${key} ~ C${++key}`;
+	key--;
+	const baseFrequency = 261.63; // C4
+	const octaveMultiplier = Math.pow(2, key - 4);
+	const stepRatio = Math.pow(2, 1 / 12);
+
+	// C, D, E, F, G, A, B, C の順で計算
+	const semitoneSteps = [0, 2, 4, 5, 7, 9, 11, 12];
+
+	frequencies = semitoneSteps.map((step) => {
+		const freq = baseFrequency * octaveMultiplier * Math.pow(stepRatio, step);
+		return Math.round(freq * 100) / 100; // 小数点以下2桁に丸める
+	});
+
+	console.log(frequencies)
+	return frequencies;
 }

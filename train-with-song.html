@@ -28,12 +28,29 @@
 	</header>
 
 	<main>
+
+		<div id="find-pitch">
+			<h1>♪ まずはピッチを探そう</h1>
+			<span class="wave-wrapper" id="waveWrapper">
+				<span class="wave-line"></span>
+				<span class="wave-line"></span>
+				<span class="wave-line"></span>
+				<span class="wave-line"></span>
+				<span class="wave-line"></span>
+			</span>
+			<div id="range-detected">私の音域は: ？</div>
+		</div>
+		
 		<canvas id="pitch-canvas"></canvas>
+		<div id="start-line"></div>
+		<div id="lyrics"></div>
 	</main>
 
 	<footer>
 		<div class="container">
 			<button id="btn-start" class="btn btn-song-start">スタート</button>
+			<button id="btn-play" class="btn btn-song-start">これでうたおう</button>
+			<button id="btn-reset" class="btn-reset" onClick="window.location.reload()">リセット</button>
 		</div>
 	</footer>
 
