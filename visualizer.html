@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>UtaO | ビジュアライザ</title>
+	<!-- font -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700;800;900&display=swap"
+		rel="stylesheet">
+	<!-- css -->
+	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="css/responsive.css">
+</head>
+
+<body id="visualizer-v">
+
+	<div id="settings">
+		<header>
+			<div class="container">
+				<a href="index.html" class="site-logo">うた～お！</a>
+				<div class="song-info"><strong>ヴィジュアライザ</strong></div>
+			</div>
+		</header>
+		
+		<div class="wrapper">
+			<h2>設定</h2>
+			<div class="row">
+				<div class="col-title">スタート画面タイトル</div>
+				<div class="col-input">
+					<input type="text" name="txtTitle" id="txtTitle" placeholder="タイトル" autocomplete="off">
+				</div>
+			</div>
+			<div class="row center">
+				<div class="col-title">休憩画面</div>
+				<div class="col-input">
+					<label class="checkbox-btn">
+						<input type="checkbox" checked id="ckbPauseScreen">
+						<span></span>
+					</label>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-title">エフェクト</div>
+				<div class="col-input">
+					<input type="text" name="txtEffectWord" id="txtEffectWord" placeholder="キーワード" autocomplete="off">
+					<select name="txtEffectList" id="txtEffectList">
+						<option value="0">エフェクトを選ぶ</option>
+						<option value="1">星</option>
+						<option value="2">線</option>
+					</select>
+				</div>
+			</div>
+		</div>
+		<footer>
+			<div class="container">
+				<button class="btn btn-song-start" id="btn-apply">適用</button>
+			</div>
+		</footer>
+	</div>
+
+	<div id="start-screen">「スタート」</div>
+	<div id="pause-screen">休憩中</div>
+	
+	<!-- js -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.1/p5.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.1/addons/p5.sound.min.js"></script>
+	 <script src="js/visualizer-script.js"></script>
+</body>
+
+</html>

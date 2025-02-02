@@ -439,7 +439,8 @@ footer {
 	font-style: italic;
 }
 
-#song-v footer .container {
+#song-v footer .container,
+#visualizer-v footer .container {
 	justify-content: center;
 }
 
@@ -515,4 +516,131 @@ footer {
 	100% {
 		height: 20px;
 	}
+}
+
+/* ===== Visualizer ===== */
+#visualizer-v {
+	overflow: hidden;
+}
+#visualizer-v .wrapper {
+	position: fixed;
+	height: calc(100vh - 70px);
+	top: 70px;
+	width: 100%;
+	display: flex;
+	flex-flow: column wrap;
+	gap: 50px;
+	box-sizing: border-box;
+	max-width: 800px;
+	left: 50%;
+	transform: translateX(-50%);
+}
+
+#visualizer-v .wrapper h2 {
+	text-align: center;
+}
+
+#visualizer-v .wrapper .row {
+	display: flex;
+	flex-flow: wrap;
+	box-sizing: border-box;
+	gap: 50px;
+}
+
+#visualizer-v .wrapper .row.center {
+	align-items: center;
+}
+
+#visualizer-v .wrapper .row .col-title {
+	width: 200px;
+	font-size: 1.15rem;
+	font-weight: 500;
+	text-align: right;
+}
+
+#visualizer-v .wrapper .row .col-input {
+	flex: 1;
+	display: flex;
+	flex-flow: column wrap;
+	gap: 30px;
+}
+
+#visualizer-v input, 
+#visualizer-v select {
+	padding: 0 10px 10px;
+	outline: none;
+	border: none;
+	font-size: 1.15rem;
+	font-weight: 500;
+	border-bottom: var(--primary-dark) 1px solid;
+}
+
+.checkbox-btn span {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 30px;
+	height: 30px;
+	background-color: #ddd;
+	transition: 0.1s;
+}
+
+.checkbox-btn span::before {
+	content: '';
+	display: inline-block;
+	width: 16px;
+	height: 8px;
+	border-bottom: 3px solid #fff;
+	border-left: 3px solid #fff;
+	transform: scale(0) rotate(-45deg);
+	position: relative;
+	bottom: 4px;
+	transition: 0.3s;
+}
+
+.checkbox-btn input {
+	display: none;
+}
+
+.checkbox-btn input:checked ~ span {
+	background-color: var(--primary-blue);
+}
+
+.checkbox-btn input:checked ~ span::before {
+	transform: scale(1) rotate(-45deg);
+}
+
+#visualizer-v canvas {
+	z-index: -1;
+}
+
+#settings {
+	z-index: 1000;
+	background-color: #fff;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+}
+
+#start-screen, #pause-screen {
+	background-color: #0c0c0c;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	color: #fcfcfc;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-flow: column wrap;
+}
+
+#start-screen {
+	z-index: 100;
+}
+
+#pause-screen {
+	z-index: 90;
+	display: none;
 }
