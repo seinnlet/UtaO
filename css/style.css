@@ -805,3 +805,22 @@ footer {
 	0%, 100% { right: -100px; }
 	70% { right: 1300px; }
 }
+
+.star {
+	--size: 20vmin;
+	--holes: calc(var(--size)*.495);
+	width: var(--size);
+	aspect-ratio: 1/1;
+	position: fixed;
+	background: var(--primary-yellow);
+	--mask: radial-gradient(var(--holes) at var(--holes) var(--holes), #0000 99%,#000) calc(var(--holes)*-1) calc(var(--holes)*-1);
+	-webkit-mask: var(--mask);
+	mask: var(--mask);
+	border-radius: 50%;
+	animation: sparkle 1.5s linear forwards;
+}
+@keyframes sparkle {
+	0% { transform: scale(0); }
+	25% { opacity: 1; }
+	100% { opacity: 0; }
+}

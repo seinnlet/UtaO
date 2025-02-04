@@ -4,7 +4,8 @@
 		font-size: clamp(1.4rem, 0.5509rem + 2.2642vw, 2rem);
 	}
 
-	.inner-container {
+	.inner-container,
+	#visualizer-v .wrapper {
 		padding: 0 20px;
 	}
 
@@ -54,6 +55,14 @@
 	#main-menu main a .icon svg {
 		width: 60px;
 		height: 60px;
+	}
+
+	#visualizer-v .wrapper {
+		gap: 30px;
+	}
+
+	#visualizer-v .wrapper .row .col-title {
+		text-align: left;
 	}
 }
 
