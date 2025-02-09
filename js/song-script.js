@@ -3,7 +3,6 @@ const btnPlay = document.getElementById('btn-play');
 const btnLowKeyPlay = document.getElementById('btn-low-key-play');
 const btnReset = document.getElementById('btn-reset');
 btnPlay.onclick = start;
-btnPlay.style.display = "inline-block";
 btnLowKeyPlay.onclick = start;
 
 const canvas = document.getElementById('pitch-canvas');
@@ -182,7 +181,7 @@ function playSong() {
 
 	for (let i = 0; i < 8; i++) {
 		playMetronome(audioCtx, currentTime, i < 4 ? 0 : 0.6);
-		currentTime += 0.7; // 0.8秒ごとにメトロノーム音を再生
+		currentTime += 0.7; // 0.7秒ごとにメトロノーム音を再生
 	}
 
 	song.forEach(note => {
@@ -259,23 +258,18 @@ function main(stream) {
 	function draw() {
 		analyser.getByteFrequencyData(frequencyData);
 
-		// 音声入力の周波数解析
 		let frequency = getFrequencyFromFFT(frequencyData, audioCtx.sampleRate);
 		let nearestKey = findNearestKey(frequency);
 
 		drawPiano(nearestKey);
-
-		// スペクトログラムをスクロール
 		shiftSpectrogram();
 
 		// 現在の音程を描画
 		if (nearestKey && isStart) {
 			drawSpectrogramKey(nearestKey, "#4CAF50");
 		}
-
 		// 曲のキーを描画
 		updateSongSpectrogram();
-
 		requestAnimationFrame(draw);
 	}
 
@@ -291,8 +285,6 @@ function main(stream) {
 		canvasCtx.clearRect(0, spectrogramHeight - 1, canvas.width, 1);
 
 		totalShiftedPixels += 1; // 1フレームで1ピクセル移動
-
-		// フレームごとの時間を計測
 		const currentFrameTime = performance.now();
 		const deltaTime = (currentFrameTime - lastFrameTime) / 700; // 秒に変換
 
@@ -321,7 +313,6 @@ function main(stream) {
 			const xTo = whiteKeyWidth * (keyIndex + 1);
 
 			for (let x = xFrom; x < xTo; x++) {
-				// const offset = ((spectrogramHeight - 1) * canvas.width + x) * 4;
 				canvasCtx.fillStyle = color;
 				canvasCtx.fillRect(x, (color == "#4CAF50" ? voiceStartHeight : spectrogramHeight) - 1, 1, 1);
 			}
@@ -334,7 +325,6 @@ function main(stream) {
 	function updateSongSpectrogram() {
 		const currentTime = audioCtx.currentTime;
 
-		// 現在再生中のノートを確認
 		if (currentNoteIndex < song.length) {
 			const note = song[currentNoteIndex];
 			const noteDuration = note.duration;
@@ -345,10 +335,8 @@ function main(stream) {
 			}
 		}
 
-		// スペクトログラムに曲のキーを描画
 		if (currentNoteIndex < song.length) {
 			const note = song[currentNoteIndex];
-
 			const key = keys.find(k => k.note === note.note);
 			if (key) {
 				drawSpectrogramKey(key, "rgba(12, 12, 12, 0.3)");
