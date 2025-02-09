@@ -8,7 +8,7 @@ const startScreen = document.getElementById("start-screen");
 const pauseScreen = document.getElementById("pause-screen");
 
 let audioContextStarted = false, isStart = false;
-let sparkleInterval;
+let sparkleInterval, bubbleInterval;
 
 btnApply.onclick = apply;
 /**
@@ -172,17 +172,17 @@ function startVoiceRecognition() {
 
 	recognition.onresult = (event) => {
 		const transcript = event.results[event.results.length - 1][0].transcript.trim();
-		// console.log(transcript)
+		console.log(transcript)
 
 		if (transcript.includes("スタート")) {
 			isStart = true
-			startScreen.style.display = "none";
+			startScreen.style.display = "none"
 			pauseScreen.style.display = "none"
 			setTimeout(() => {
 				if (!song.isPlaying()) {
 					song.play()
 				}
-			}, 200);
+			}, 200)
 		}
 
 		if (transcript.includes("再開") && !isStart) {
@@ -198,10 +198,17 @@ function startVoiceRecognition() {
 		}
 
 		if (transcript.includes(txtEffectWord.value) && txtEffectList.value == 1 && isStart) {
-			sparkleInterval = setInterval(addStar, 50);
+			sparkleInterval = setInterval(addStar, 50)
 			setTimeout(function() {
-				clearInterval(sparkleInterval);
-			}, 3000);
+				clearInterval(sparkleInterval)
+			}, 3000)
+		}
+
+		if (transcript.includes(txtEffectWord.value) && txtEffectList.value == 2 && isStart) {
+			bubbleInterval = setInterval(addBubble, 200)
+			setTimeout(function() {
+				clearInterval(bubbleInterval)
+			}, 3000)
 		}
 	};
 
@@ -231,4 +238,20 @@ function addStar() {
 	s.style.top = Math.floor(Math.random() * 100) + '%'
 	s.onanimationend = function() { this.remove() }
 	document.body.appendChild(s)
+}
+
+/**
+ * バブルエフェクト
+ */
+function addBubble() {
+	const bubble = document.createElement('span')
+	bubble.classList.add('bubble')
+
+	const size = Math.floor(Math.random() * 50 + 20)
+
+	bubble.style.width = `${size}px`
+	bubble.style.height = `${size}px`
+	bubble.style.left = `${Math.floor(Math.random() * 100)}%`
+
+	document.body.appendChild(bubble)
 }
