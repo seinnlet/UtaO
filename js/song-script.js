@@ -1,7 +1,9 @@
 const btnStart = document.getElementById('btn-start');
 const btnPlay = document.getElementById('btn-play');
+const btnLowKeyPlay = document.getElementById('btn-low-key-play');
 const btnReset = document.getElementById('btn-reset');
 btnPlay.onclick = start;
+btnLowKeyPlay.onclick = start;
 
 const canvas = document.getElementById('pitch-canvas');
 canvas.width = window.innerHeight;
@@ -59,15 +61,49 @@ let song = [
 	{ note: 'C4', duration: 1.6 }
 ];
 
-let lowerKeys = [
-	{ note: 'C3', freq: 130.81 },
-	{ note: 'D3', freq: 146.83 },
-	{ note: 'E3', freq: 164.81 },
-	{ note: 'F3', freq: 174.61 },
-	{ note: 'G3', freq: 196.00 },
-	{ note: 'A3', freq: 220.00 },
-	{ note: 'B3', freq: 246.94 },
-	{ note: 'C4', freq: 261.63 },
+let songLowKeys = [
+	{ note: 'G3', duration: 0.8 },
+	{ note: 'G3', duration: 0.8 },
+	{ note: 'D4', duration: 0.8 },
+	{ note: 'D4', duration: 0.8 },
+	{ note: 'E4', duration: 0.8 },
+	{ note: 'E4', duration: 0.8 },
+	{ note: 'D4', duration: 1.6 },
+	{ note: 'C4', duration: 0.8 },
+	{ note: 'C4', duration: 0.8 },
+	{ note: 'B3', duration: 0.8 },
+	{ note: 'B3', duration: 0.8 },
+	{ note: 'A3', duration: 0.8 },
+	{ note: 'A3', duration: 0.8 },
+	{ note: 'G3', duration: 1.6 },
+	{ note: 'D4', duration: 0.8 },
+	{ note: 'D4', duration: 0.8 },
+	{ note: 'C4', duration: 0.8 },
+	{ note: 'C4', duration: 0.8 },
+	{ note: 'B3', duration: 0.8 },
+	{ note: 'B3', duration: 0.8 },
+	{ note: 'A3', duration: 1.6 },
+	{ note: 'D4', duration: 0.8 },
+	{ note: 'D4', duration: 0.8 },
+	{ note: 'C4', duration: 0.8 },
+	{ note: 'C4', duration: 0.8 },
+	{ note: 'B3', duration: 0.8 },
+	{ note: 'B3', duration: 0.8 },
+	{ note: 'A3', duration: 1.6 },
+	{ note: 'G3', duration: 0.8 },
+	{ note: 'G3', duration: 0.8 },
+	{ note: 'D4', duration: 0.8 },
+	{ note: 'D4', duration: 0.8 },
+	{ note: 'E4', duration: 0.8 },
+	{ note: 'E4', duration: 0.8 },
+	{ note: 'D4', duration: 1.6 },
+	{ note: 'C4', duration: 0.8 },
+	{ note: 'C4', duration: 0.8 },
+	{ note: 'B3', duration: 0.8 },
+	{ note: 'B3', duration: 0.8 },
+	{ note: 'A3', duration: 0.8 },
+	{ note: 'A3', duration: 0.8 },
+	{ note: 'G3', duration: 1.6 }
 ];
 
 let keys = [
@@ -79,6 +115,17 @@ let keys = [
 	{ note: 'A4', freq: 440.00 },
 	{ note: 'B4', freq: 493.88 },
 	{ note: 'C5', freq: 523.25 },
+];
+
+let lowKeys = [
+	{ note: 'G3', freq: 196.00 },
+	{ note: 'A3', freq: 220.00 },
+	{ note: 'B3', freq: 246.94 },
+	{ note: 'C4', freq: 261.63 },
+	{ note: 'D4', freq: 293.66 },
+	{ note: 'E4', freq: 329.63 },
+	{ note: 'F4', freq: 349.23 },
+	{ note: 'G4', freq: 392.00 }
 ];
 
 let songLyrics = [
@@ -93,33 +140,30 @@ let songLyrics = [
 ];
 
 function start() {
+	checkKeys(this.dataset.song)
 	navigator.mediaDevices
 		.getUserMedia({ audio: true })
 		.then((stream) => {
 			main(stream);
-			checkKey();
 			playSong();
 			displayLyrics();
 		})
 		.catch(console.log);
 }
 
-function checkKey() {
-	if (currentKey == 3) {
-		keys = lowerKeys;
-		song = song.map(noteObj => {
-			let newNote = noteObj.note.replace(/\d$/, match => parseInt(match) - 1);
-			return { note: newNote, duration: noteObj.duration };
-		});
+function checkKeys(songKey) {
+	if (songKey == "low") {
+		keys = lowKeys;
+		song = songLowKeys;
 	}
 }
 
 function playMetronome(audioCtx, currentTime, startVolume) {
 	const oscillator = audioCtx.createOscillator();
 	const gainNode = audioCtx.createGain();
-	
+
 	oscillator.type = 'square';
-	oscillator.frequency.value = 800; 
+	oscillator.frequency.value = 800;
 
 	gainNode.gain.setValueAtTime(startVolume, currentTime);
 	gainNode.gain.exponentialRampToValueAtTime(0.001, currentTime + 0.1);
@@ -163,7 +207,7 @@ function playSong() {
 }
 
 function main(stream) {
-	
+
 	var audioCtx = new window.AudioContext();
 	var realAudioInput = audioCtx.createMediaStreamSource(stream);
 	var analyser = audioCtx.createAnalyser();
@@ -175,11 +219,12 @@ function main(stream) {
 
 	findPitchArea.style.display = "none";
 	btnPlay.style.display = "none";
+	btnLowKeyPlay.style.display = "none";
 	btnReset.style.display = "inline-block";
 	canvas.style.display = "block";
 
 	function findNearestKey(frequency) {
-		const tolerance = 12; // 許容範囲（Hz）
+		const tolerance = 14; // 許容範囲（Hz）
 		let nearestKey = null;
 		let minDiff = Infinity;
 
@@ -206,7 +251,7 @@ function main(stream) {
 		let frequency = (maxIndex * sampleRate) / analyser.fftSize;
 		return frequency;
 	}
-	
+
 	let isStart = false;
 	let startLineDistance = 0;
 
@@ -316,7 +361,7 @@ function main(stream) {
 		let keyHeight = canvas.height / 4;
 		let whiteKeyWidth = canvas.width / keys.length;
 		let keyTop = 0;
-		
+
 		canvasCtx.clearRect(0, keyTop, canvas.width, keyHeight);
 
 		canvasCtx.textAlign = "center";
@@ -333,7 +378,7 @@ function main(stream) {
 			}
 
 			const rectX = whiteKeyWidth * i;
-    	const rectY = keyTop;
+			const rectY = keyTop;
 
 			canvasCtx.fillRect(
 				rectX,
@@ -344,28 +389,36 @@ function main(stream) {
 
 			canvasCtx.fillStyle = "#0c0c0c";
 			canvasCtx.fillText(
-        keys[i].note, 
-        rectX + whiteKeyWidth / 2, 
-        rectY + keyHeight / 2 
-    	);
+				keys[i].note,
+				rectX + whiteKeyWidth / 2,
+				rectY + keyHeight / 2
+			);
 			alpha += 0.1;
 		}
 
 		var blackKeyWidth = whiteKeyWidth / 2;
-    var leftOffset = whiteKeyWidth * 0.75;
-    keyHeight = keyHeight * 0.25;
+		var leftOffset = whiteKeyWidth * 0.75;
+		keyHeight = keyHeight * 0.25;
 
-    canvasCtx.fillStyle = '#22282f';
-    for (var key = 0; key < 9; key++) {
-      if (key !== 2 && key !== 6) {
-        canvasCtx.fillRect(
-          whiteKeyWidth * key + leftOffset,
-          keyTop,
-          blackKeyWidth,
-          keyHeight
-        );
-      }
-    }
+		canvasCtx.fillStyle = '#22282f';
+		for (let i = 0; i < keys.length; i++) {
+			if (keys[0].note !== "C4") {
+				canvasCtx.fillRect(
+					0,
+					keyTop,
+					blackKeyWidth / 2,
+					keyHeight
+				);
+			}
+			if (keys[i].note !== "B3" && keys[i].note !== "E4" && keys[i].note !== "B4") {
+				canvasCtx.fillRect(
+					whiteKeyWidth * i + leftOffset,
+					keyTop,
+					blackKeyWidth,
+					keyHeight
+				);
+			}
+		}
 
 		canvasCtx.stroke();
 	}
@@ -385,125 +438,134 @@ function displayLyrics() {
 }
 
 // Detecting Pitch
-const pitchData = [];
+const pitchDataA3 = [];
+const pitchDataA4 = [];
 const sampleNotes = [
-	{ name: "Do", frequency: 261.63 }, // C4
-	{ name: "Re", frequency: 293.66 },
-	{ name: "Mi", frequency: 329.63 },
+	{ name: "A3", frequency: 220.00 },
+	{ name: "A4", frequency: 440.00 }
 ];
 let audioContext;
 let analyser;
 let microphone;
 let dataArray;
 let bufferLength;
+let currentPhase = "A3";
+let timeoutId;
 
 btnStart.addEventListener('click', async () => {
 	try {
-			// Initialize audio context and microphone input
-			audioContext = new (window.AudioContext || window.webkitAudioContext)();
-			analyser = audioContext.createAnalyser();
-			analyser.fftSize = 2048; 
-			bufferLength = analyser.frequencyBinCount;
-			dataArray = new Float32Array(bufferLength);
 
-			microphone = await navigator.mediaDevices.getUserMedia({ audio: true });
-			const source = audioContext.createMediaStreamSource(microphone);
-			source.connect(analyser);
+		audioContext = new (window.AudioContext || window.webkitAudioContext)();
+		analyser = audioContext.createAnalyser();
+		analyser.fftSize = 2048;
+		bufferLength = analyser.frequencyBinCount;
+		dataArray = new Float32Array(bufferLength);
 
-			btnStart.innerText = "判定中";
-			btnStart.disabled = true;
-			for (let i = 0; i < waveLines.length; i++) {
-				waveLines[i].style.animationPlayState = "running";
-				waveLines[i].style.webkitAnimationPlayState = "running";
-			}
+		microphone = await navigator.mediaDevices.getUserMedia({ audio: true });
+		const source = audioContext.createMediaStreamSource(microphone);
+		source.connect(analyser);
 
-			let currentTime = audioContext.currentTime;
-			sampleNotes.forEach(note => {
-				const oscillator = audioContext.createOscillator();
-				oscillator.frequency.setValueAtTime(note.frequency, currentTime);
-				oscillator.connect(audioContext.destination);
-				oscillator.start(currentTime);
-				oscillator.stop(currentTime + 0.8);
-				currentTime += 0.8;
-			});
+		btnStart.innerText = "判定中";
+		btnStart.disabled = true;
+		rangeArea.innerText = `音を聞いてね`;
+
+		for (let i = 0; i < waveLines.length; i++) {
+			waveLines[i].style.animationPlayState = "running";
+			waveLines[i].style.webkitAnimationPlayState = "running";
+		}
+
+		let currentTime = audioContext.currentTime;
+		sampleNotes.forEach(note => {
+			const oscillator = audioContext.createOscillator();
+			oscillator.frequency.setValueAtTime(note.frequency, currentTime);
+			oscillator.connect(audioContext.destination);
+			oscillator.start(currentTime);
+			oscillator.stop(currentTime + 2);
+			currentTime += 2;
+		});
+
+		setTimeout(() => {
+			timeoutId = setTimeout(() => {
+				stopDetection();
+				analyzePitchData();
+			}, 6000);
+
+			detectPitch();
+			rangeArea.classList.add("animate-duration");
+			rangeArea.innerText = `低い「ラ」`;
+			console.log(currentPhase)
 
 			setTimeout(() => {
-				detectPitch();
-			}, sampleNotes.length * 0.8 * 1000);
+				currentPhase = "A4";
+				rangeArea.innerText = `高い「ラ」`;
+				console.log(currentPhase)
+			}, 3000);
+
+		}, 4000);
 
 	} catch (err) {
-			console.error('Error accessing microphone:', err);
+		console.error('Error accessing microphone:', err);
 	}
 });
 
 function detectPitch() {
 	analyser.getFloatFrequencyData(dataArray);
 
-  let maxAmplitude = -Infinity;
-  let pitchIndex = -1;
+	let maxAmplitude = -Infinity;
+	let pitchIndex = -1;
 
-  for (let i = 0; i < bufferLength; i++) {
-    if (dataArray[i] > maxAmplitude) {
-      maxAmplitude = dataArray[i];
-      pitchIndex = i;
-    }
-  }
+	for (let i = 0; i < bufferLength; i++) {
+		if (dataArray[i] > maxAmplitude) {
+			maxAmplitude = dataArray[i];
+			pitchIndex = i;
+		}
+	}
 
-  const nyquist = audioContext.sampleRate / 2;
-  const frequency = pitchIndex * nyquist / (bufferLength / 2);
+	const nyquist = audioContext.sampleRate / 2;
+	const frequency = pitchIndex * nyquist / (bufferLength / 2);
 
-  if (frequency > 65.41 && frequency < 523.25) {
-    pitchData.push(frequency);
-  }
+	if (currentPhase === "A3" && isInRange(frequency, 220, 50)) {
+		pitchDataA3.push(frequency);
+	}
+	if (currentPhase === "A4" && isInRange(frequency, 440, 30)) {
+		pitchDataA4.push(frequency);
+	}
 
-  if (pitchData.length >= 100) { 
-    stopDetection();
-    analyzePitchData();
-  } else {
-    requestAnimationFrame(detectPitch);
-  }
+	requestAnimationFrame(detectPitch);
+}
+
+function isInRange(value, target, tolerance) {
+	return value >= target - tolerance && value <= target + tolerance;
 }
 
 function stopDetection() {
-  microphone.getTracks().forEach(track => track.stop());
+	microphone.getTracks().forEach((track) => track.stop());
+	btnStart.style.display = "none";
+	rangeArea.classList.remove("animate-duration");
+	btnPlay.style.display = "inline-block";
+	btnLowKeyPlay.style.display = "inline-block";
 	for (let i = 0; i < waveLines.length; i++) {
 		waveLines[i].style.animation = "none";
 		waveLines[i].style.webkitAnimation = "none";
 	}
-	btnStart.style.display = "none";
-	btnPlay.style.display = "inline-block";
 }
 
 function analyzePitchData() {
-  const ranges = {
-    "C4-C5": { min: 261.63, max: 523.25, count: 0 },
-    "C3-C4": { min: 130.81, max: 261.63, count: 0 },
-    "C2-C3": { min: 65.41, max: 130.81, count: 0 },
-  };
+	const matchRateA3 = (pitchDataA3.length / (pitchDataA3.length + pitchDataA4.length)) * 100;
+	const matchRateA4 = (pitchDataA4.length / (pitchDataA3.length + pitchDataA4.length)) * 100;
 
-  pitchData.forEach(frequency => {
-    for (const range in ranges) {
-      if (frequency >= ranges[range].min && frequency < ranges[range].max) {
-        ranges[range].count++;
-        break;
-      }
-    }
-  });
+	console.log(`A3一致率: ${matchRateA3.toFixed(2)}%`);
+	console.log(`A4一致率: ${matchRateA4.toFixed(2)}%`);
+	console.log(pitchDataA3);
+	console.log(pitchDataA4);
 
-  let maxCount = 0;
-  let detectedRange = "";
-	let index = 4;
-  for (const range in ranges) {
-    if (ranges[range].count > maxCount) {
-      maxCount = ranges[range].count;
-      detectedRange = range;
-			currentKey = index;
-    }
-		index--;
-  }
-
-	console.log(pitchData)
-	console.log(ranges)
-	console.log(currentKey)
-	rangeArea.innerText = `私の音域は: ${detectedRange}`;
+	if (matchRateA4 > matchRateA3) {
+		rangeArea.innerHTML = `素晴らしい！<br>原曲キーで歌えると思うよ。`;
+		btnPlay.classList = "btn btn-song-start";
+		btnLowKeyPlay.classList = "btn-outline";
+	} else {
+		rangeArea.innerText = `いいね！少しキーを下げて歌う？`;
+		btnLowKeyPlay.classList = "btn btn-song-start";
+		btnPlay.classList = "btn-outline";
+	}
 }
