@@ -131,7 +131,7 @@ let lowKeys = [
 ];
 
 let songLyrics = [
-	{ lyrics: '', duration: 4.2 },
+	{ lyrics: '', duration: 5.6 },
 	{ lyrics: '♪ Twinkle Twinkle, Little Star', duration: 6.3 },
 	{ lyrics: '♪ How I wonder what you are', duration: 5.6 },
 	{ lyrics: '♪ Up above the world so high', duration: 5.6 },
@@ -181,8 +181,8 @@ function playSong() {
 	const audioCtx = new window.AudioContext();
 	let currentTime = audioCtx.currentTime;
 
-	for (let i = 0; i < 8; i++) {
-		playMetronome(audioCtx, currentTime, i < 4 ? 0 : 0.6);
+	for (let i = 0; i < 10; i++) {
+		playMetronome(audioCtx, currentTime, i < 6 ? 0 : 0.6);
 		currentTime += 0.7; // 0.7秒ごとにメトロノーム音を再生
 	}
 
@@ -214,7 +214,7 @@ function playSong() {
 		sparkleAudio.addEventListener('ended', function() {
       clearInterval(sparkleInterval);
     });
-  }, songEndTime * 1000);
+  }, songEndTime * 1000 + 1000);
 }
 
 function main(stream) {
@@ -304,9 +304,9 @@ function main(stream) {
 
 			isStart = true;
 			startLine.style.opacity = "1";
-			startLine.style.right = pixelsPerSecond.toFixed(2) * 8 + "px";
+			startLine.style.right = pixelsPerSecond.toFixed(2) * 10 + "px";
 
-			startLineDistance = pixelsPerSecond.toFixed(2) * 8;
+			startLineDistance = pixelsPerSecond.toFixed(2) * 10;
 
 			totalShiftedPixels = 0; // リセット
 			lastFrameTime = currentFrameTime; // 時間をリセット
