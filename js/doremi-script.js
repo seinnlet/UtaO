@@ -21,7 +21,7 @@ const pitches = [
 let frequencies = [261.63, 293.66, 329.63, 349.23, 392.00, 440.00, 493.88, 523.25];
 
 let audioContext, analyser, sourceNode, rafId;
-let currentKey = 4, minKey = 2, maxKey = 4;
+let currentKey = 4, minKey = 2, maxKey = 5;
 
 /**
  * スタートタンをクリックする
@@ -190,6 +190,7 @@ lowKeyButton.addEventListener('click', function() {
 	if (currentKey > minKey) {
 		currentKey-=1;
 		setFrequencies(currentKey);
+		updateKeyDisplayText();
 	}
 });
 
@@ -197,6 +198,7 @@ highKeyButton.addEventListener('click', function() {
 	if (currentKey < maxKey) {
 		currentKey+=1;
 		setFrequencies(currentKey);
+		updateKeyDisplayText();
 	}
 });
 
@@ -217,4 +219,18 @@ function setFrequencies(key) {
 
 	console.log(frequencies)
 	return frequencies;
+}
+
+/**
+ * キーのテキストを変える
+ */
+function updateKeyDisplayText() {
+	noteElements.forEach((noteElement, index) => {
+		let note = noteElement.querySelector('div').textContent;
+		let newNoteText = note[0] + currentKey;
+		if (index === noteElements.length - 1) {
+			newNoteText = note[0] + (currentKey + 1);
+		}
+		noteElement.querySelector('div').textContent = newNoteText;
+	});
 }
