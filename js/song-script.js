@@ -3,6 +3,7 @@ const btnPlay = document.getElementById('btn-play');
 const btnLowKeyPlay = document.getElementById('btn-low-key-play');
 const btnReset = document.getElementById('btn-reset');
 btnPlay.onclick = start;
+btnPlay.style.display = "inline-block";
 btnLowKeyPlay.onclick = start;
 
 const canvas = document.getElementById('pitch-canvas');
@@ -17,93 +18,93 @@ const waveLines = document.getElementsByClassName("wave-line");
 const findPitchArea = document.getElementById("find-pitch");
 
 let song = [
-	{ note: 'C4', duration: 0.8 },
-	{ note: 'C4', duration: 0.8 },
-	{ note: 'G4', duration: 0.8 },
-	{ note: 'G4', duration: 0.8 },
-	{ note: 'A4', duration: 0.8 },
-	{ note: 'A4', duration: 0.8 },
-	{ note: 'G4', duration: 1.6 },
-	{ note: 'F4', duration: 0.8 },
-	{ note: 'F4', duration: 0.8 },
-	{ note: 'E4', duration: 0.8 },
-	{ note: 'E4', duration: 0.8 },
-	{ note: 'D4', duration: 0.8 },
-	{ note: 'D4', duration: 0.8 },
-	{ note: 'C4', duration: 1.6 },
-	{ note: 'G4', duration: 0.8 },
-	{ note: 'G4', duration: 0.8 },
-	{ note: 'F4', duration: 0.8 },
-	{ note: 'F4', duration: 0.8 },
-	{ note: 'E4', duration: 0.8 },
-	{ note: 'E4', duration: 0.8 },
-	{ note: 'D4', duration: 1.6 },
-	{ note: 'G4', duration: 0.8 },
-	{ note: 'G4', duration: 0.8 },
-	{ note: 'F4', duration: 0.8 },
-	{ note: 'F4', duration: 0.8 },
-	{ note: 'E4', duration: 0.8 },
-	{ note: 'E4', duration: 0.8 },
-	{ note: 'D4', duration: 1.6 },
-	{ note: 'C4', duration: 0.8 },
-	{ note: 'C4', duration: 0.8 },
-	{ note: 'G4', duration: 0.8 },
-	{ note: 'G4', duration: 0.8 },
-	{ note: 'A4', duration: 0.8 },
-	{ note: 'A4', duration: 0.8 },
-	{ note: 'G4', duration: 1.6 },
-	{ note: 'F4', duration: 0.8 },
-	{ note: 'F4', duration: 0.8 },
-	{ note: 'E4', duration: 0.8 },
-	{ note: 'E4', duration: 0.8 },
-	{ note: 'D4', duration: 0.8 },
-	{ note: 'D4', duration: 0.8 },
-	{ note: 'C4', duration: 1.6 }
+	{ note: 'C4', duration: 0.7 },
+	{ note: 'C4', duration: 0.7 },
+	{ note: 'G4', duration: 0.7 },
+	{ note: 'G4', duration: 0.7 },
+	{ note: 'A4', duration: 0.7 },
+	{ note: 'A4', duration: 0.7 },
+	{ note: 'G4', duration: 1.4 },
+	{ note: 'F4', duration: 0.7 },
+	{ note: 'F4', duration: 0.7 },
+	{ note: 'E4', duration: 0.7 },
+	{ note: 'E4', duration: 0.7 },
+	{ note: 'D4', duration: 0.7 },
+	{ note: 'D4', duration: 0.7 },
+	{ note: 'C4', duration: 1.4 },
+	{ note: 'G4', duration: 0.7 },
+	{ note: 'G4', duration: 0.7 },
+	{ note: 'F4', duration: 0.7 },
+	{ note: 'F4', duration: 0.7 },
+	{ note: 'E4', duration: 0.7 },
+	{ note: 'E4', duration: 0.7 },
+	{ note: 'D4', duration: 1.4 },
+	{ note: 'G4', duration: 0.7 },
+	{ note: 'G4', duration: 0.7 },
+	{ note: 'F4', duration: 0.7 },
+	{ note: 'F4', duration: 0.7 },
+	{ note: 'E4', duration: 0.7 },
+	{ note: 'E4', duration: 0.7 },
+	{ note: 'D4', duration: 1.4 },
+	{ note: 'C4', duration: 0.7 },
+	{ note: 'C4', duration: 0.7 },
+	{ note: 'G4', duration: 0.7 },
+	{ note: 'G4', duration: 0.7 },
+	{ note: 'A4', duration: 0.7 },
+	{ note: 'A4', duration: 0.7 },
+	{ note: 'G4', duration: 1.4 },
+	{ note: 'F4', duration: 0.7 },
+	{ note: 'F4', duration: 0.7 },
+	{ note: 'E4', duration: 0.7 },
+	{ note: 'E4', duration: 0.7 },
+	{ note: 'D4', duration: 0.7 },
+	{ note: 'D4', duration: 0.7 },
+	{ note: 'C4', duration: 1.4 }
 ];
 
 let songLowKeys = [
-	{ note: 'G3', duration: 0.8 },
-	{ note: 'G3', duration: 0.8 },
-	{ note: 'D4', duration: 0.8 },
-	{ note: 'D4', duration: 0.8 },
-	{ note: 'E4', duration: 0.8 },
-	{ note: 'E4', duration: 0.8 },
-	{ note: 'D4', duration: 1.6 },
-	{ note: 'C4', duration: 0.8 },
-	{ note: 'C4', duration: 0.8 },
-	{ note: 'B3', duration: 0.8 },
-	{ note: 'B3', duration: 0.8 },
-	{ note: 'A3', duration: 0.8 },
-	{ note: 'A3', duration: 0.8 },
-	{ note: 'G3', duration: 1.6 },
-	{ note: 'D4', duration: 0.8 },
-	{ note: 'D4', duration: 0.8 },
-	{ note: 'C4', duration: 0.8 },
-	{ note: 'C4', duration: 0.8 },
-	{ note: 'B3', duration: 0.8 },
-	{ note: 'B3', duration: 0.8 },
-	{ note: 'A3', duration: 1.6 },
-	{ note: 'D4', duration: 0.8 },
-	{ note: 'D4', duration: 0.8 },
-	{ note: 'C4', duration: 0.8 },
-	{ note: 'C4', duration: 0.8 },
-	{ note: 'B3', duration: 0.8 },
-	{ note: 'B3', duration: 0.8 },
-	{ note: 'A3', duration: 1.6 },
-	{ note: 'G3', duration: 0.8 },
-	{ note: 'G3', duration: 0.8 },
-	{ note: 'D4', duration: 0.8 },
-	{ note: 'D4', duration: 0.8 },
-	{ note: 'E4', duration: 0.8 },
-	{ note: 'E4', duration: 0.8 },
-	{ note: 'D4', duration: 1.6 },
-	{ note: 'C4', duration: 0.8 },
-	{ note: 'C4', duration: 0.8 },
-	{ note: 'B3', duration: 0.8 },
-	{ note: 'B3', duration: 0.8 },
-	{ note: 'A3', duration: 0.8 },
-	{ note: 'A3', duration: 0.8 },
-	{ note: 'G3', duration: 1.6 }
+	{ note: 'G3', duration: 0.7 },
+	{ note: 'G3', duration: 0.7 },
+	{ note: 'D4', duration: 0.7 },
+	{ note: 'D4', duration: 0.7 },
+	{ note: 'E4', duration: 0.7 },
+	{ note: 'E4', duration: 0.7 },
+	{ note: 'D4', duration: 1.4 },
+	{ note: 'C4', duration: 0.7 },
+	{ note: 'C4', duration: 0.7 },
+	{ note: 'B3', duration: 0.7 },
+	{ note: 'B3', duration: 0.7 },
+	{ note: 'A3', duration: 0.7 },
+	{ note: 'A3', duration: 0.7 },
+	{ note: 'G3', duration: 1.4 },
+	{ note: 'D4', duration: 0.7 },
+	{ note: 'D4', duration: 0.7 },
+	{ note: 'C4', duration: 0.7 },
+	{ note: 'C4', duration: 0.7 },
+	{ note: 'B3', duration: 0.7 },
+	{ note: 'B3', duration: 0.7 },
+	{ note: 'A3', duration: 1.4 },
+	{ note: 'D4', duration: 0.7 },
+	{ note: 'D4', duration: 0.7 },
+	{ note: 'C4', duration: 0.7 },
+	{ note: 'C4', duration: 0.7 },
+	{ note: 'B3', duration: 0.7 },
+	{ note: 'B3', duration: 0.7 },
+	{ note: 'A3', duration: 1.4 },
+	{ note: 'G3', duration: 0.7 },
+	{ note: 'G3', duration: 0.7 },
+	{ note: 'D4', duration: 0.7 },
+	{ note: 'D4', duration: 0.7 },
+	{ note: 'E4', duration: 0.7 },
+	{ note: 'E4', duration: 0.7 },
+	{ note: 'D4', duration: 1.4 },
+	{ note: 'C4', duration: 0.7 },
+	{ note: 'C4', duration: 0.7 },
+	{ note: 'B3', duration: 0.7 },
+	{ note: 'B3', duration: 0.7 },
+	{ note: 'A3', duration: 0.7 },
+	{ note: 'A3', duration: 0.7 },
+	{ note: 'G3', duration: 1.4 }
 ];
 
 let keys = [
@@ -129,14 +130,14 @@ let lowKeys = [
 ];
 
 let songLyrics = [
-	{ lyrics: '', duration: 4.8 },
-	{ lyrics: '♪ Twinkle Twinkle, Little Star', duration: 7.2 },
-	{ lyrics: '♪ How I wonder what you are', duration: 6.4 },
-	{ lyrics: '♪ Up above the world so high', duration: 6.4 },
-	{ lyrics: '♪ Like a diamond in the sky', duration: 6.4 },
-	{ lyrics: '♪ Twinkle Twinkle Little Star', duration: 6.4 },
-	{ lyrics: '♪ How I wonder what you are!', duration: 8.0 },
-	{ lyrics: '', duration: 0.8 },
+	{ lyrics: '', duration: 4.2 },
+	{ lyrics: '♪ Twinkle Twinkle, Little Star', duration: 6.3 },
+	{ lyrics: '♪ How I wonder what you are', duration: 5.6 },
+	{ lyrics: '♪ Up above the world so high', duration: 5.6 },
+	{ lyrics: '♪ Like a diamond in the sky', duration: 5.6 },
+	{ lyrics: '♪ Twinkle Twinkle Little Star', duration: 5.6 },
+	{ lyrics: '♪ How I wonder what you are!', duration: 7.0 },
+	{ lyrics: '', duration: 0.7 },
 ];
 
 function start() {
@@ -181,7 +182,7 @@ function playSong() {
 
 	for (let i = 0; i < 8; i++) {
 		playMetronome(audioCtx, currentTime, i < 4 ? 0 : 0.6);
-		currentTime += 0.8; // 0.8秒ごとにメトロノーム音を再生
+		currentTime += 0.7; // 0.8秒ごとにメトロノーム音を再生
 	}
 
 	song.forEach(note => {
@@ -283,7 +284,6 @@ function main(stream) {
 	let pixelsPerSecond = 0;
 
 	function shiftSpectrogram() {
-		const spectrogramHeightStart = Math.floor(canvas.height * 0.25);
 		const spectrogramHeight = canvas.height;
 		const imageData = canvasCtx.getImageData(0, 0, canvas.width, spectrogramHeight);
 
@@ -294,11 +294,11 @@ function main(stream) {
 
 		// フレームごとの時間を計測
 		const currentFrameTime = performance.now();
-		const deltaTime = (currentFrameTime - lastFrameTime) / 800; // 秒に変換
+		const deltaTime = (currentFrameTime - lastFrameTime) / 700; // 秒に変換
 
 		if (deltaTime >= 1 && !isStart) {
-			pixelsPerSecond = totalShiftedPixels / deltaTime; // 0.8秒あたりの移動距離
-			// console.log(`1秒間の移動距離: ${pixelsPerSecond.toFixed(2)} ピクセル`);
+			pixelsPerSecond = totalShiftedPixels / deltaTime;
+			
 			isStart = true;
 			startLine.style.opacity = "1";
 			startLine.style.right = pixelsPerSecond.toFixed(2) * 8 + "px";
