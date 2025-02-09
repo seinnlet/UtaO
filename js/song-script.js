@@ -16,6 +16,8 @@ const rangeArea = document.getElementById('range-detected');
 const waveLines = document.getElementsByClassName("wave-line");
 const findPitchArea = document.getElementById("find-pitch");
 
+const sparkleAudio = new Audio('./audio/きらきら輝く.mp3');
+
 let song = [
 	{ note: 'C4', duration: 0.7 },
 	{ note: 'C4', duration: 0.7 },
@@ -204,6 +206,15 @@ function playSong() {
 		oscillator.stop(currentTime + note.duration);
 		currentTime += note.duration;
 	});
+
+	const songEndTime = currentTime;
+	setTimeout(() => {
+    sparkleInterval = setInterval(addStar, 50);
+		sparkleAudio.play();
+		sparkleAudio.addEventListener('ended', function() {
+      clearInterval(sparkleInterval);
+    });
+  }, songEndTime * 1000);
 }
 
 function main(stream) {
@@ -290,7 +301,7 @@ function main(stream) {
 
 		if (deltaTime >= 1 && !isStart) {
 			pixelsPerSecond = totalShiftedPixels / deltaTime;
-			
+
 			isStart = true;
 			startLine.style.opacity = "1";
 			startLine.style.right = pixelsPerSecond.toFixed(2) * 8 + "px";
@@ -556,4 +567,17 @@ function analyzePitchData() {
 		btnLowKeyPlay.classList = "btn btn-song-start";
 		btnPlay.classList = "btn-outline";
 	}
+}
+
+/**
+ * 星エフェクト
+ */
+function addStar() {
+	var s = document.createElement('div')
+	s.className = 'star'
+	s.style.setProperty('--size', Math.random() * 10 + 3 + 'vmin')
+	s.style.left = Math.floor(Math.random() * 100) + '%'
+	s.style.top = Math.floor(Math.random() * 100) + '%'
+	s.onanimationend = function () { this.remove() }
+	document.body.appendChild(s)
 }
