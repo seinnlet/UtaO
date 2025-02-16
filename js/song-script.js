@@ -523,10 +523,10 @@ function detectPitch() {
 	const nyquist = audioContext.sampleRate / 2;
 	const frequency = pitchIndex * nyquist / (bufferLength / 2);
 
-	if (currentPhase === "A3" && isInRange(frequency, 220, 50)) {
+	if (currentPhase === "A3" && isInRange(frequency, 220, 30)) {
 		pitchDataA3.push(frequency);
 	}
-	if (currentPhase === "A4" && isInRange(frequency, 440, 30)) {
+	if (currentPhase === "A4" && isInRange(frequency, 440, 60)) {
 		pitchDataA4.push(frequency);
 	}
 
