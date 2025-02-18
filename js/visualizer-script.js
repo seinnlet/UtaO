@@ -46,7 +46,8 @@ function draw() {
 
 	// small circle
 	let level = amplitude.getLevel()
-	let r1 = map(level, 0, 1, 0, 400)
+	// let r1 = map(level, 0, 1, 0, 400)
+	let r1 = map(mic.getLevel(), 0, 1, 0, 400)
 	fill(137, 207, 240, random(10, 255))
 	ellipse(width / 2, height / 2, r1, r1)
 
