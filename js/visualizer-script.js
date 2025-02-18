@@ -22,23 +22,23 @@ function apply() {
 
 let song, fft, amplitude, angle = 0
 let particles = []
-// let mic
+let mic
 
 /********************
  * p5.js animation
  ********************/
 function preload() {
-	song = loadSound("audio/約束の手紙.mp3")
+	// song = loadSound("audio/約束の手紙.mp3")
 }
 
 function setup() {
 	createCanvas(windowWidth, windowHeight)
 	angleMode(DEGREES)
-	// mic = new p5.AudioIn();
-	// mic.start();
+	mic = new p5.AudioIn();
+	mic.start();
 	fft = new p5.FFT()
 	amplitude = new p5.Amplitude();
-	// fft.setInput(mic);
+	fft.setInput(mic);
 }
 
 function draw() {
@@ -56,8 +56,8 @@ function draw() {
 	noFill()
 	translate(width / 2, height / 2)
 	fft.analyze()
-	// amp = mic.getLevel()
-	amp = fft.getEnergy(20, 200)
+	amp = mic.getLevel()
+	// amp = fft.getEnergy(20, 200)
 	let wave = fft.waveform()
 
 	// wave path
@@ -81,8 +81,8 @@ function draw() {
 		particles.push(p)
 		for (let i = particles.length - 1; i >= 0; i--) {
 			if (!particles[i].edges()) {
-				// particles[i].update(amp > 0.1);
-				particles[i].update(amp > 200);
+				particles[i].update(amp > 0.1);
+				// particles[i].update(amp > 200);
 				particles[i].show();
 			} else {
 				particles.splice(i, 1)
