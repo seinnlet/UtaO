@@ -178,23 +178,23 @@ function startVoiceRecognition() {
 			isStart = true
 			startScreen.style.display = "none"
 			pauseScreen.style.display = "none"
-			setTimeout(() => {
-				if (!song.isPlaying()) {
-					song.play()
-				}
-			}, 200)
+			// setTimeout(() => {
+			// 	if (!song.isPlaying()) {
+			// 		song.play()
+			// 	}
+			// }, 200)
 		}
 
 		if (transcript.includes("再開") && !isStart) {
 			isStart = true
 			pauseScreen.style.display = "none"
-			song.play()
+			// song.play()
 		}
 
 		if (transcript.includes("休憩") && ckbPauseScreen.checked && isStart) {
 			isStart = false
 			pauseScreen.style.display = "flex"
-			song.pause()
+			// song.pause()
 		}
 
 		if (transcript.includes(txtEffectWord.value) && txtEffectList.value == 1 && isStart) {
