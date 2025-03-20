@@ -28,17 +28,17 @@ let mic
  * p5.js animation
  ********************/
 function preload() {
-	// song = loadSound("audio/約束の手紙.mp3")
+	song = loadSound("audio/約束の手紙.mp3")
 }
 
 function setup() {
 	createCanvas(windowWidth, windowHeight)
 	angleMode(DEGREES)
-	mic = new p5.AudioIn();
-	mic.start();
+	// mic = new p5.AudioIn();
+	// mic.start();
 	fft = new p5.FFT()
 	amplitude = new p5.Amplitude();
-	fft.setInput(mic);
+	// fft.setInput(mic);
 }
 
 function draw() {
@@ -46,8 +46,8 @@ function draw() {
 
 	// small circle
 	let level = amplitude.getLevel()
-	// let r1 = map(level, 0, 1, 0, 400)
-	let r1 = map(mic.getLevel(), 0, 1, 0, 400)
+	let r1 = map(level, 0, 1, 0, 400)
+	// let r1 = map(mic.getLevel(), 0, 1, 0, 400)
 	fill(137, 207, 240, random(10, 255))
 	ellipse(width / 2, height / 2, r1, r1)
 
@@ -57,8 +57,8 @@ function draw() {
 	noFill()
 	translate(width / 2, height / 2)
 	fft.analyze()
-	amp = mic.getLevel()
-	// amp = fft.getEnergy(20, 200)
+	// amp = mic.getLevel()
+	amp = fft.getEnergy(20, 200)
 	let wave = fft.waveform()
 
 	// wave path
@@ -82,8 +82,8 @@ function draw() {
 		particles.push(p)
 		for (let i = particles.length - 1; i >= 0; i--) {
 			if (!particles[i].edges()) {
-				particles[i].update(amp > 0.1);
-				// particles[i].update(amp > 200);
+				// particles[i].update(amp > 0.1);
+				particles[i].update(amp > 200);
 				particles[i].show();
 			} else {
 				particles.splice(i, 1)
@@ -179,23 +179,23 @@ function startVoiceRecognition() {
 			isStart = true
 			startScreen.style.display = "none"
 			pauseScreen.style.display = "none"
-			// setTimeout(() => {
-			// 	if (!song.isPlaying()) {
-			// 		song.play()
-			// 	}
-			// }, 200)
+			setTimeout(() => {
+				if (!song.isPlaying()) {
+					song.play()
+				}
+			}, 200)
 		}
 
 		if (transcript.includes("再開") && !isStart) {
 			isStart = true
 			pauseScreen.style.display = "none"
-			// song.play()
+			song.play()
 		}
 
 		if (transcript.includes("休憩") && ckbPauseScreen.checked && isStart) {
 			isStart = false
 			pauseScreen.style.display = "flex"
-			// song.pause()
+			song.pause()
 		}
 
 		if (transcript.includes(txtEffectWord.value) && txtEffectList.value == 1 && isStart) {
