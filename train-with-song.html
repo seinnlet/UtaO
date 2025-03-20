@@ -30,7 +30,7 @@
 	<main>
 
 		<div id="find-pitch">
-			<h1>♪ まずはピッチを探そう</h1>
+			<h1>♪ 早速うた～おうか？</h1>
 			<span class="wave-wrapper" id="waveWrapper">
 				<span class="wave-line"></span>
 				<span class="wave-line"></span>
@@ -38,7 +38,6 @@
 				<span class="wave-line"></span>
 				<span class="wave-line"></span>
 			</span>
-			<div id="range-detected">ウォーミングアップ！</div>
 		</div>
 		
 		<canvas id="pitch-canvas"></canvas>
@@ -48,9 +47,8 @@
 
 	<footer>
 		<div class="container">
-			<button id="btn-start" class="btn btn-song-start">スタート</button>
-			<button id="btn-play" data-song="origin">原曲キーでうたう</button>
-			<button id="btn-low-key-play" data-song="low">キー下げてうたう</button>
+			<button id="btn-play" data-song="origin" class="btn btn-song-start">原曲キーでうたう</button>
+			<button id="btn-low-key-play" data-song="low" class="btn-outline">キー下げてうたう</button>
 			<button id="btn-reset" class="btn-outline" onClick="window.location.reload()">リセット</button>
 		</div>
 	</footer>

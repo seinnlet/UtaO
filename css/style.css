@@ -407,8 +407,6 @@ footer {
 	justify-content: center;
 }
 
-#btn-play, 
-#btn-low-key-play, 
 #btn-reset {
 	display: none;
 }
@@ -452,37 +450,6 @@ footer {
 	text-align: center;
 	flex-flow: column wrap;
 	gap: 20px;
-}
-
-#range-detected {
-	margin: 0.67em 0;
-	min-width: 500px;
-	height: 120px;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	border-radius: 20px;
-	box-shadow: 0 0 15px rgba(149, 157, 165, 0.2);
-	position: relative;
-	overflow: hidden;
-}
-
-#range-detected.animate-duration::after {
-	position: absolute;
-	content: "";
-	bottom: 0;
-	left: 0;
-	height: 5px;
-	background-color: var(--primary-yellow);
-	width: 0;
-	-webkit-animation: soundDuration 3s infinite linear;
-	animation: soundDuration 3s infinite linear;
-}
-
-@keyframes soundDuration {
-	to {
-		width: 100%;
-	}
 }
 
 .wave-wrapper {
